@@ -18,6 +18,46 @@
 
 ---
 
+## 🎯 Défi National - Nuit de l'Info 2024
+
+### 📍 Accès au Défi Capgemini
+
+| Information | Lien |
+|-------------|------|
+| 🌐 **Site Officiel** | [www.nuitdelinfo.com](https://www.nuitdelinfo.com/) |
+| 🎯 **Défi Capgemini** | [Visualisation Audio](https://www.nuitdelinfo.com/inscription/defis/480) |
+| 💻 **Notre Solution** | [GitHub Repository](https://github.com/Ahmedouyahya/Visualisation-Audio) |
+| 🚀 **Demo Live** | [Sonic Dimension](https://ahmedouyahya.github.io/Visualisation-Audio/) |
+
+### 📋 Comment Accéder à Notre Œuvre
+
+1. **Via le Site du Défi** :
+   - Rendez-vous sur [nuitdelinfo.com](https://www.nuitdelinfo.com/)
+   - Naviguez vers **Défis** → **Capgemini**
+   - Recherchez l'équipe **"MAX 100%"**
+
+2. **Accès Direct** :
+   - 🔗 **Demo** : https://ahmedouyahya.github.io/Visualisation-Audio/
+   - 📂 **Code Source** : https://github.com/Ahmedouyahya/Visualisation-Audio
+
+3. **Pour Tester** :
+   - Ouvrez le lien de démo
+   - Cliquez sur **"FICHIER"** pour charger votre musique
+   - Ou cliquez sur **"SYNTHWAVE"** pour une démo instantanée
+   - Explorez les **13 modes de visualisation** !
+
+### 🏆 Notre Réponse au Défi
+
+Le défi Capgemini demandait de créer une **visualisation audio nostalgique et fun**. 
+
+**SONIC DIMENSION** répond à ce défi avec :
+- 🕹️ **Nostalgie** : Effets CRT, scanlines, esthétique rétro-futuriste
+- 🎮 **Fun** : 13 modes interactifs, Easter egg Konami, effets spéciaux
+- 🎵 **Audio** : Analyse FFT, détection de beats, réactivité au son
+- ✨ **Innovation** : WebGL 3D, particules, thèmes personnalisables
+
+---
+
 ## 🏆 Équipe MAX 100%
 
 Projet réalisé dans le cadre de la **Nuit de l'Info 2024** pour le défi **Capgemini** sur le thème de la visualisation audio.
