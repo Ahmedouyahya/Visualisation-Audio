@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎵 SONIC DIMENSION - Équipe Max 100% | Nuit de l'Info 2024</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Press+Start+2P&family=Audiowide&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loader-content">
+            <div class="dna-loader">
+                <div class="dna-strand"></div>
+                <div class="dna-strand"></div>
+            </div>
+            <h1 class="loader-title">SONIC DIMENSION</h1>
+            <p class="loader-subtitle">Initializing Audio Matrix...</p>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p class="team-credit">by <span class="team-name">MAX 100%</span></p>
+            <p class="event-credit">🏆 Nuit de l'Info 2024 - Défi Capgemini</p>
+        </div>
+    </div>
+
+    <!-- Winning Team Floating Banner -->
+    <div class="floating-team-banner">
+        <div class="banner-pulse"></div>
+        <span class="banner-icon">🏆</span>
+        <span class="banner-text">ÉQUIPE MAX 100%</span>
+        <span class="banner-icon">🏆</span>
+    </div>
+
+    <!-- FPS Counter -->
+    <div id="fpsCounter" class="fps-counter">60 FPS</div>
+
+    <!-- Beat Indicator -->
+    <div id="beatIndicator" class="beat-indicator">
+        <span class="beat-pulse">♪</span>
+    </div>
+
+    <!-- Particle Background -->
+    <canvas id="particleBackground"></canvas>
+
+    <!-- Effects Overlay -->
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+
+    <div class="main-container">
+        <!-- Header -->
+        <header class="epic-header">
+            <div class="logo-container">
+                <div class="logo-rings">
+                    <div class="ring ring-1"></div>
+                    <div class="ring ring-2"></div>
+                    <div class="ring ring-3"></div>
+                </div>
+                <h1 class="main-title glitch-text" data-text="SONIC DIMENSION">SONIC DIMENSION</h1>
+            </div>
+            <p class="tagline">🌌 VOYAGE AU CŒUR DU SON 🌌</p>
+            <div class="team-badge">
+                <div class="badge-glow"></div>
+                <span class="badge-text">ÉQUIPE</span>
+                <span class="badge-name">MAX 100%</span>
+            </div>
+        </header>
+
+        <!-- Main Visualizer -->
+        <main class="visualizer-section">
+            <div class="visualizer-wrapper">
+                <div class="hologram-frame">
+                    <div class="frame-corner top-left"></div>
+                    <div class="frame-corner top-right"></div>
+                    <div class="frame-corner bottom-left"></div>
+                    <div class="frame-corner bottom-right"></div>
+                    <div class="frame-scanner"></div>
+                </div>
+                
+                <canvas id="visualizer3D"></canvas>
+                <canvas id="visualizer2D"></canvas>
+                
+                <!-- Stats Overlay -->
+                <div class="visualizer-overlay">
+                    <div class="stat-box top-left">
+                        <span class="stat-label">FREQ</span>
+                        <span class="stat-value" id="freqValue">0 Hz</span>
+                    </div>
+                    <div class="stat-box top-right">
+                        <span class="stat-label">BPM</span>
+                        <span class="stat-value" id="bpmValue">--</span>
+                    </div>
+                    <div class="stat-box bottom-left">
+                        <span class="stat-label">BASS</span>
+                        <div class="mini-bar" id="bassBar"></div>
+                    </div>
+                    <div class="stat-box bottom-right">
+                        <span class="stat-label">TREBLE</span>
+                        <div class="mini-bar" id="trebleBar"></div>
+                    </div>
+                </div>
+
+                <div class="mode-indicator">
+                    <span id="currentModeName">NEBULA</span>
+                </div>
+            </div>
+
+            <!-- Waveform -->
+            <div class="waveform-container">
+                <canvas id="waveformCanvas"></canvas>
+            </div>
+
+            <!-- Mini Spectrum -->
+            <div class="spectrum-mini">
+                <canvas id="spectrumMini"></canvas>
+            </div>
+        </main>
+
+        <!-- Control Panel -->
+        <section class="control-panel-section">
+            <div class="panel-header">
+                <div class="panel-light"></div>
+                <h2>🎛️ COMMAND CENTER</h2>
+                <div class="panel-light"></div>
+            </div>
+
+            <!-- Audio Input -->
+            <div class="control-group">
+                <h3><span class="icon">📡</span> SOURCE AUDIO</h3>
+                <div class="input-buttons">
+                    <label class="cyber-btn file-input">
+                        <input type="file" id="audioFile" accept="audio/*">
+                        <span class="btn-content">
+                            <span class="btn-icon">📂</span>
+                            <span class="btn-text">FICHIER</span>
+                        </span>
+                    </label>
+                    
+                    <button id="micBtn" class="cyber-btn">
+                        <span class="btn-content">
+                            <span class="btn-icon">🎤</span>
+                            <span class="btn-text">MICRO</span>
+                        </span>
+                    </button>
+
+                    <button id="demoBtn" class="cyber-btn demo-btn">
+                        <span class="btn-content">
+                            <span class="btn-icon">🎹</span>
+                            <span class="btn-text">SYNTHWAVE</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Playback -->
+            <div class="control-group">
+                <h3><span class="icon">⏯️</span> LECTURE</h3>
+                <div class="playback-controls">
+                    <button id="playBtn" class="control-btn play-btn" disabled>▶</button>
+                    <button id="pauseBtn" class="control-btn" disabled>⏸</button>
+                    <button id="stopBtn" class="control-btn" disabled>⏹</button>
+                </div>
+                
+                <div class="progress-container">
+                    <span id="currentTime">0:00</span>
+                    <div class="audio-progress">
+                        <div class="progress-track">
+                            <div class="progress-fill" id="audioProgress"></div>
+                        </div>
+                    </div>
+                    <span id="duration">0:00</span>
+                </div>
+
+                <div class="now-playing">
+                    <div class="vinyl-record" id="vinylRecord">
+                        <div class="vinyl-label"></div>
+                    </div>
+                    <div class="track-info">
+                        <span class="track-name" id="trackName">En attente d'audio...</span>
+                        <div class="audio-wave-mini">
+                            <span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualization Modes -->
+            <div class="control-group">
+                <h3><span class="icon">🌀</span> DIMENSION VISUELLE</h3>
+                <div class="modes-grid">
+                    <button class="mode-card active" data-mode="nebula">
+                        <div class="mode-icon">🌌</div>
+                        <span class="mode-name">NEBULA</span>
+                    </button>
+                    <button class="mode-card" data-mode="dna">
+                        <div class="mode-icon">🧬</div>
+                        <span class="mode-name">DNA HELIX</span>
+                    </button>
+                    <button class="mode-card" data-mode="blackhole">
+                        <div class="mode-icon">🕳️</div>
+                        <span class="mode-name">BLACK HOLE</span>
+                    </button>
+                    <button class="mode-card" data-mode="terrain">
+                        <div class="mode-icon">🏔️</div>
+                        <span class="mode-name">TERRAIN 3D</span>
+                    </button>
+                    <button class="mode-card" data-mode="galaxy">
+                        <div class="mode-icon">✨</div>
+                        <span class="mode-name">GALAXY</span>
+                    </button>
+                    <button class="mode-card" data-mode="cube">
+                        <div class="mode-icon">📦</div>
+                        <span class="mode-name">HYPERCUBE</span>
+                    </button>
+                    <button class="mode-card" data-mode="fire">
+                        <div class="mode-icon">🔥</div>
+                        <span class="mode-name">INFERNO</span>
+                    </button>
+                    <button class="mode-card" data-mode="wave3d">
+                        <div class="mode-icon">🌊</div>
+                        <span class="mode-name">WAVE 3D</span>
+                    </button>
+                    <button class="mode-card" data-mode="tunnel">
+                        <div class="mode-icon">🚀</div>
+                        <span class="mode-name">WARP TUNNEL</span>
+                    </button>
+                    <button class="mode-card" data-mode="fractal">
+                        <div class="mode-icon">🔷</div>
+                        <span class="mode-name">FRACTAL</span>
+                    </button>
+                    <button class="mode-card" data-mode="bars">
+                        <div class="mode-icon">📊</div>
+                        <span class="mode-name">SPECTRUM</span>
+                    </button>
+                    <button class="mode-card" data-mode="matrix">
+                        <div class="mode-icon">💊</div>
+                        <span class="mode-name">MATRIX</span>
+                    </button>
+                    <button class="mode-card special-mode" data-mode="logo">
+                        <div class="mode-icon">🏆</div>
+                        <span class="mode-name">MAX 100%</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Themes -->
+            <div class="control-group">
+                <h3><span class="icon">🎨</span> PALETTE COSMIQUE</h3>
+                <div class="themes-carousel">
+                    <button class="theme-orb active" data-theme="cyberpunk" title="Cyberpunk">
+                        <div class="orb-inner" style="background: linear-gradient(135deg, #ff00ff, #00ffff);"></div>
+                    </button>
+                    <button class="theme-orb" data-theme="aurora" title="Aurora">
+                        <div class="orb-inner" style="background: linear-gradient(135deg, #00ff87, #60efff);"></div>
+                    </button>
+                    <button class="theme-orb" data-theme="sunset" title="Sunset">
+                        <div class="orb-inner" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);"></div>
+                    </button>
+                    <button class="theme-orb" data-theme="ocean" title="Ocean">
+                        <div class="orb-inner" style="background: linear-gradient(135deg, #0077b6, #00b4d8);"></div>
+                    </button>
+                    <button class="theme-orb" data-theme="royal" title="Royal">
+                        <div class="orb-inner" style="background: linear-gradient(135deg, #7b2cbf, #c77dff);"></div>
+                    </button>
+                    <button class="theme-orb" data-theme="fire" title="Fire">
+                        <div class="orb-inner" style="background: linear-gradient(135deg, #ff0000, #ffaa00);"></div>
+                    </button>
+                    <button class="theme-orb" data-theme="matrix" title="Matrix">
+                        <div class="orb-inner" style="background: linear-gradient(135deg, #003300, #00ff00);"></div>
+                    </button>
+                    <button class="theme-orb" data-theme="gold" title="Gold">
+                        <div class="orb-inner" style="background: linear-gradient(135deg, #f4a460, #ffd700);"></div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Advanced Controls -->
+            <div class="control-group">
+                <h3><span class="icon">⚙️</span> PARAMÈTRES</h3>
+                <div class="sliders-container">
+                    <div class="slider-item">
+                        <label>🔊 VOLUME</label>
+                        <input type="range" id="volumeSlider" min="0" max="100" value="70">
+                        <span id="volumeValue">70%</span>
+                    </div>
+                    <div class="slider-item">
+                        <label>📊 SENSIBILITÉ</label>
+                        <input type="range" id="sensitivitySlider" min="0.5" max="5" value="2" step="0.1">
+                        <span id="sensitivityValue">2x</span>
+                    </div>
+                    <div class="slider-item">
+                        <label>⚡ VITESSE</label>
+                        <input type="range" id="speedSlider" min="0.1" max="3" value="1" step="0.1">
+                        <span id="speedValue">1x</span>
+                    </div>
+                    <div class="slider-item">
+                        <label>🌈 BLOOM</label>
+                        <input type="range" id="bloomSlider" min="0" max="100" value="50">
+                        <span id="bloomValue">50%</span>
+                    </div>
+                </div>
+
+                <div class="toggles-container">
+                    <label class="toggle-item">
+                        <input type="checkbox" id="autoRotate" checked>
+                        <span class="toggle-switch"></span>
+                        <span>Auto-Rotation</span>
+                    </label>
+                    <label class="toggle-item">
+                        <input type="checkbox" id="beatReact" checked>
+                        <span class="toggle-switch"></span>
+                        <span>Beat React</span>
+                    </label>
+                    <label class="toggle-item">
+                        <input type="checkbox" id="mirrorMode">
+                        <span class="toggle-switch"></span>
+                        <span>Mirror</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Effects -->
+            <div class="control-group">
+                <h3><span class="icon">✨</span> EFFETS SPÉCIAUX</h3>
+                <div class="effects-grid">
+                    <button class="effect-btn" id="flashBtn">⚡ FLASH</button>
+                    <button class="effect-btn" id="shakeBtn">🌋 SHAKE</button>
+                    <button class="effect-btn" id="explosionBtn">💥 BOOM</button>
+                    <button class="effect-btn" id="screenshotBtn">📸 CAPTURE</button>
+                    <button class="effect-btn" id="fullscreenBtn">🖥️ FULLSCREEN</button>
+                    <button class="effect-btn" id="randomBtn">🎲 RANDOM</button>
+                    <button class="effect-btn rainbow" id="rainbowBtn">🌈 RAINBOW</button>
+                    <button class="effect-btn pulse-btn" id="pulseBtn">💓 PULSE</button>
+                </div>
+            </div>
+
+            <!-- Shortcuts -->
+            <div class="control-group shortcuts-group">
+                <h3><span class="icon">⌨️</span> RACCOURCIS</h3>
+                <div class="shortcuts-grid">
+                    <div class="shortcut"><kbd>SPACE</kbd> Play/Pause</div>
+                    <div class="shortcut"><kbd>F</kbd> Fullscreen</div>
+                    <div class="shortcut"><kbd>R</kbd> Random</div>
+                    <div class="shortcut"><kbd>S</kbd> Screenshot</div>
+                    <div class="shortcut"><kbd>↑↓</kbd> Volume</div>
+                    <div class="shortcut"><kbd>1-9</kbd> Modes</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="epic-footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">SONIC</span>
+                    <span class="logo-dimension">DIMENSION</span>
+                </div>
+                <div class="footer-info">
+                    <p class="event">🌙 Nuit de l'Info 2024 - Défi CAPGEMINI 🌙</p>
+                    <div class="team-final-box">
+                        <div class="trophy-animation">🏆</div>
+                        <p class="team-final">
+                            Créé avec <span class="heart-beat">❤️</span> par
+                        </p>
+                        <h2 class="team-name-giant">ÉQUIPE MAX 100%</h2>
+                        <div class="team-members">
+                            <span class="member">Ahmed</span>
+                            <span class="member-sep">•</span>
+                            <span class="member">Et l'équipe</span>
+                        </div>
+                        <div class="trophy-animation">🏆</div>
+                    </div>
+                    <p class="tech-stack">
+                        <span class="tech">WebGL</span>
+                        <span class="tech">Three.js</span>
+                        <span class="tech">Web Audio API</span>
+                        <span class="tech">Canvas 2D</span>
+                        <span class="tech">12 Visualizations</span>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-particles"></div>
+            <div class="footer-wave">
+                <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="wave-fill"></path>
+                    <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="wave-fill"></path>
+                    <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,googletag172.46-45.71,248.8-84.81V0Z" class="wave-fill"></path>
+                </svg>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="audioElement" crossorigin="anonymous"></audio>
+
+    <!-- Easter Egg -->
+    <div id="easterEgg" class="easter-egg hidden">
+        <div class="egg-content">
+            <h2>🎉 KONAMI CODE!</h2>
+            <p>Mode SECRET activé!</p>
+        </div>
+    </div>
+
+    <script src="visualizer.js"></script>
+</body>
+</html>
