@@ -10,6 +10,8 @@
 
 **Un visualiseur audio immersif et spectaculaire créé pour le défi Capgemini**
 
+## 🌐 [▶️ ESSAYER EN LIGNE](https://ahmedouyahya.github.io/Visualisation-Audio/) 🌐
+
 [🚀 Demo](#demo) • [✨ Features](#features) • [🛠️ Tech Stack](#tech-stack) • [📦 Installation](#installation) • [🎮 Usage](#usage)
 
 </div>
